@@ -5,10 +5,11 @@
     kaiquebarreto.com | @kaique_barreto 
 */
 
-$streamer = "yoda"; // Digite o canal do seu Streamer
-$cliente_id = ""; // Digite o seu id, para conseguir um acesse: https://dev.twitch.tv/console/apps
+$streamer = "DIGITE O CANAL AQUI"; // Digite o canal do seu Streamer
 
 function file_get_contents_curl($url) {
+	
+$cliente_id = "DIGIGE SEU ID DO CLIENTE"; // Digite o seu id, para conseguir um acesse: https://dev.twitch.tv/console/apps
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);

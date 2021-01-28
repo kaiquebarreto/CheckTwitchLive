@@ -12,7 +12,7 @@ $url = "https://api.twitch.tv/helix/streams?user_login=$streamer&first=100";
 function file_get_contents_curl($url) {
 	
 $cliente_id = "DIGIGE SEU ID DO CLIENTE"; // Digite o seu id, para conseguir um acesse: https://dev.twitch.tv/console/apps
-$token = ""; // Digite o Auth Token aqui
+$token = "DIGITE SEU TOKEN AQUI"; // Digite o Auth Token aqui
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);

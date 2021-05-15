@@ -1,49 +1,58 @@
-<?php 
-
+<?php
 /*
     Criado por Kaique Barreto 
     kaiquebarreto.com | @kaique_barreto
-    Versão 1.1 | Atualizado em 15/01/2021
+    Versão 1.2 | Atualizado em 14/05/2021
+
+    Create by Kaique Barreto
+    kaiquebarreto.com | @kaique_barreto
+    Version 1.2 | Update on 14/05/2021
+
+    // https://dev.twitch.tv/console --> Utilize para obter seu id de cliente e seu token
 */
 
-$streamer = "DIGITE O CANAL AQUI"; // Digite o canal do seu Streamer
-$url = "https://api.twitch.tv/helix/streams?user_login=$streamer&first=100";
 
-function file_get_contents_curl($url) {
-	
-$cliente_id = "DIGIGE SEU ID DO CLIENTE"; // Digite o seu id, para conseguir um acesse: https://dev.twitch.tv/console/apps
-$token = "DIGITE SEU TOKEN AQUI"; // Digite o Auth Token aqui
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);     
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "Client-ID: $cliente_id",        
-        "Authorization: Bearer $token", 
-        "Accept: application/vnd.twitchtv.v5+json"     
-    ));
+$streamer = 'kaiquepessoa'; // Digite o usuário do Streamer               ||          Enter the Streamer user
+$clientId = "CLIENT_ID"; // Digite o seu id de Cliente                    ||          Enter the client ID
+$token = "TOKEN"; // Digite o seu token                                   ||          Enter the token
 
-    $data = curl_exec($ch);
-    curl_close($ch);
-    return $data;
 
-}
 
-$json_array = json_decode(file_get_contents_curl($url), true);
+$linkId = "https://api.twitch.tv/kraken/users?login=$streamer";
+$host = "$_SERVER[HTTP_HOST]";
+        
+function capture($link, $x, $y) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_URL, $link);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);     
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Client-ID: $x",        
+            "Authorization: Bearer $y", 
+            "Accept: application/vnd.twitchtv.v5+json"     
+        ));
+    
+        $dataId = curl_exec($ch);
+        curl_close($ch);
+        return $dataId;
+    
+    }
 
-$verificacao = $json_array['data'][0]['type'];
-	
-/* 
-    Mostra se a live esta online ou offline 
-*/
+$captureId = json_decode(capture($linkId, $clientId, $token), true);
+$idUser = $captureId['users'][0]['_id'];
+$linkWithId = "https://api.twitch.tv/kraken/streams/$idUser";
 
-if (!empty($verificacao)) {
-    echo "Live Online"; 
+$jsonStream = json_decode(capture($linkWithId, $clientId, $token), true);
+$result = $jsonStream['stream']['stream_type'];
+
+
+if ($result === 'live') {
+    echo 'Live On';
 } else {
-	echo "Live Offline";
+    echo 'Live Off';
 }
 
 ?>

@@ -18,23 +18,23 @@ $clientId = "CLIENT_ID"; // Digite o seu id de Cliente                    ||    
 $token = "TOKEN"; // Digite o seu token                                   ||          Enter the token
         
 function capture($link, $x, $y) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_URL, $link);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);     
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Client-ID: $x",        
-            "Authorization: Bearer $y", 
-            "Accept: application/vnd.twitchtv.v5+json"     
-        ));
-    
-        $dataId = curl_exec($ch);
-        curl_close($ch);
-        return $dataId;
-    
-    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, $link);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);     
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "Client-ID: $x",        
+        "Authorization: Bearer $y", 
+        "Accept: application/vnd.twitchtv.v5+json"     
+    ));
+
+    $dataId = curl_exec($ch);
+    curl_close($ch);
+    return $dataId;
+
+}
 
 $linkId = "https://api.twitch.tv/kraken/users?login=$streamer";
 $captureId = json_decode(capture($linkId, $clientId, $token), true);
@@ -50,5 +50,3 @@ if ($result === 'live') {
 } else {
     echo 'Live Off';
 }
-
-?>

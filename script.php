@@ -16,11 +16,6 @@
 $streamer = 'kaiquepessoa'; // Digite o usuário do Streamer               ||          Enter the Streamer user
 $clientId = "CLIENT_ID"; // Digite o seu id de Cliente                    ||          Enter the client ID
 $token = "TOKEN"; // Digite o seu token                                   ||          Enter the token
-
-
-
-$linkId = "https://api.twitch.tv/kraken/users?login=$streamer";
-$host = "$_SERVER[HTTP_HOST]";
         
 function capture($link, $x, $y) {
         $ch = curl_init();
@@ -41,6 +36,7 @@ function capture($link, $x, $y) {
     
     }
 
+$linkId = "https://api.twitch.tv/kraken/users?login=$streamer";
 $captureId = json_decode(capture($linkId, $clientId, $token), true);
 $idUser = $captureId['users'][0]['_id'];
 $linkWithId = "https://api.twitch.tv/kraken/streams/$idUser";
